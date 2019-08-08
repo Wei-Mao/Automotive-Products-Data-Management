@@ -9,5 +9,5 @@ The language used to design the web page is as follows:
 1) Server side (back end) language: PHP.
 2) Browser (front end) language: HTML, JQuery. JQuery is a package of JavaScript that is
 a fast, concise JavaScript framework.
-3) Database query language: SQL(Structured Query Language). the standard SQL commands such as "Select", "Insert", "Update", "Delete", "Create", and "Drop" can be used to accomplish almost everything that one needs to do with a database
+3) Database query language: SQL(Structured Query Language). The standard SQL commands such as "Select", "Insert", "Update", "Delete", "Create", and "Drop" can be used to accomplish almost everything that one needs to do with a database
 
