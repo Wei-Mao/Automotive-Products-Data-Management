@@ -1,0 +1,26 @@
+@charset "utf-8";
+.main0 ul{
+	display:none;
+}
+.main ul{
+	display:none;
+	
+	}
+
+ul li{
+	list-style-type:none;
+	}
+
+a{
+	text-decoration:none;
+		
+}
+
+span{
+    display:-moz-inline-box; display:inline-block; width:16px;
+	height:16px;
+	text-align:center;
+	/*background-color:#F00;*/
+	cursor:pointer;
+	border:1px solid #00F;
+}

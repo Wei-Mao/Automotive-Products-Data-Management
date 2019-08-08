@@ -1,0 +1,168 @@
+\newpage
+\section*{附录}
+\addcontentsline{toc}{section}{附录}
+\appendix
+BOM表显示程序由bom\_show.php、bom.js、bom.css三大部分组成。
+
+bom\_show.php程序
+\begin{lstlisting}[language=PHP]
+<?php include("conn.php");?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>无标题文档</title>
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<link href="css/bom.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-3.1.1.min.js" type="text/javascript">
+</script>
+<script src="js/bom.js" type="text/javascript">
+</script>
+<style type="text/css">
+/*<![CDATA[*/
+body {
+margin-left: 0px;
+margin-top: 0px;
+margin-right: 0px;
+margin-bottom: 0px;
+}
+/*]]>*/
+</style>
+</head><?php 
+if($_SESSION[name]!=""){
+?><?php 
+//查找所有产品
+$sql='select * from car_prod';
+$result= @mysql_query($sql);
+
+?>
+
+<body class="linearleft">
+<table width="900" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="200"></td>
+
+<td align="left">
+<ul>
+<li class="main0">
+<span class="first">+</span> <a style="font-family:'楷体'; font-weight:bolder">车型及其零件</a>
+
+<ul>
+<?php while($row=@mysql_fetch_array($result)){?>
+
+<li class="main">
+<span class="second">+</span> <a href="sg_prod.php?prd_id=%3C?php%20echo%20$row[prd_id];?%3E"><?php echo $row[prd_name];?></a> <?php 
+$sql1='select * from car_part where car_prod_prd_id='.$row[prd_id];
+$result1=@mysql_query($sql1);
+?>
+
+<ul class="part">
+<?php while($row1=@mysql_fetch_array($result1)){?>
+
+<li><a href="sg_part.php?prt_id=%3C?php%20echo%20$row1[prt_id];?%3E"><?php echo $row1[prt_name];?></a></li><?php }?>
+</ul>
+</li><?php }?>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</table><?php } else {
+
+echo "<script language='javascript'>alert('请登录！');location.href='javascript:history.go(-1)';</script>";     
+}
+?>
+</body>
+</html>
+\end{lstlisting}
+
+bom.js程序
+\begin{lstlisting}[language=Java]
+	$(document).ready(function() {
+	$(".first").click(function(){
+	var buf = $(this).text(); 
+	if(buf=="+"){
+	$(this).text("-");
+	}else{
+	$(this).text("+");
+	}
+	$(".part").css("display","none");
+	$(".second").text("+");
+	var ulNodef1 = $(this).next();
+	var ulNodef  = ulNodef1.next();
+	
+	if(ulNodef.css("display")=="none"){
+	ulNodef.css("display","block");
+	}else{
+	ulNodef.css("display","none");
+	}
+	/*ulNode.hide();
+	ulNode.show();*/
+	/*ulNode.toggle();/*数字单位毫秒，slow,fast,normal表示切换的速度*/
+	//ulNode.slideToggle();/*数字单位毫秒，slow,fast,normal表示切换的速度*/
+	/*ulNode.slideDown();
+	ulNode.slideUp();
+	*/
+	})
+	
+	
+	$(".second").click(function(){
+	var bu = $(this).text(); 
+	if(bu=="+"){
+	$(this).text("-");
+	}else{
+	$(this).text("+");
+	}
+	
+	var ulNode1 = $(this).next();
+	var ulNode  = ulNode1.next();
+	
+	if(ulNode.css("display")=="none"){
+	ulNode.css("display","block");
+	}else{
+	ulNode.css("display","none");
+	}
+	/*ulNode.hide();
+	ulNode.show();*/
+	/*ulNode.toggle();/*数字单位毫秒，slow,fast,normal表示切换的速度*/
+	//ulNode.slideToggle();/*数字单位毫秒，slow,fast,normal表示切换的速度*/
+	/*ulNode.slideDown();
+	ulNode.slideUp();
+	*/
+	})
+	});
+\end{lstlisting}
+
+bom.css程序
+\begin{lstlisting}[language=HTML]
+@charset "utf-8";
+.main0 ul{
+display:none;
+}
+.main ul{
+display:none;
+
+}
+
+ul li{
+list-style-type:none;
+}
+
+a{
+text-decoration:none;
+
+}
+
+span{
+display:-moz-inline-box; display:inline-block; width:16px;
+height:16px;
+text-align:center;
+/*background-color:#F00;*/
+cursor:pointer;
+border:1px solid #00F;
+}
+
+\end{lstlisting}

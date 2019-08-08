@@ -1,0 +1,272 @@
+%%=======================================
+%  WHUT Bachelor Thesis v 0.1b
+%  
+%  Tsao Yu
+%  tsaoyu@tsaoyu.com
+%  Last Modify Date Feb.6,2014
+%%=======================================
+\documentclass[cs4size,a4paper]{ctexart}
+%\usepackage[scheme = plain]{ctex} %只提供中文支持，不改变版式风格
+
+ %目录显示chapter层次
+\makeatletter
+\def\@bfdottedtocline#1#2#3#4#5{%
+	\ifnum #1>\c@tocdepth \else
+	\vskip \z@ \@plus.2\p@
+	{\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+		\parindent #2\relax\@afterindenttrue
+		\interlinepenalty\@M
+		\leavevmode \bfseries
+		\@tempdima #3\relax
+		\advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+		{#4}\normalfont\nobreak
+		\leaders\hbox{$\m@th
+			\mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+			mu$}\hfill
+		\nobreak
+		\hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor #5}%
+		\par}%
+	\fi}
+\renewcommand*\l@section{\@bfdottedtocline{0}{0em}{1.5em}}
+\makeatother
+
+%\documentclass[cs4size,a4paper]{ctexrep} %有chapter层次 
+\setcounter{tocdepth}{2}%目录显示2层  
+%==================== 数学符号公式 ============
+\usepackage{polynom}
+\usepackage[super,square,comma,sort&compress,numbers]{natbib}%参考文献上标，方框
+\usepackage{amsmath}                 % AMS LaTeX宏包
+%\usepackage{amssymb}                % 用来排版漂亮的数学公式
+%\usepackage{amsbsy}
+\usepackage{booktabs}                %三线表
+\usepackage[style=1]{mdframed}
+\usepackage{enumitem}                %列表环境
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}                % 英文花体字 体
+\usepackage{bm}                      % 数学公式中的黑斜体
+\usepackage{bbding,manfnt}           % 一些图标，如 \dbend
+\usepackage{lettrine}                % 首字下沉，命令\lettrine
+\def\attention{\lettrine[lines=2,lraise=0,nindent=0em]{\large\textdbend\hspace{1mm}}{}}
+\usepackage{longtable}
+\usepackage[toc,page]{appendix}
+\usepackage{geometry}                % 页边距调整
+\geometry{top=2.5cm,bottom=2.0cm,left=2.5cm,right=2.0cm}
+%\usepackage{relsize}                % 调整公式字体大小：\mathsmaller,\mathlarger
+%\usepackage{caption2}               % 浮动图形和表格标题样式
+%====================系统本地华文中宋字体==================
+%\setCJKfamilyfont{hwzs}{STZhongsong}   %字体部分使用
+%\newcommand{\stzs}{\CJKfamily{hwzs}}
+%\setmainfont{Times New Roman}        %全局英文使用time new roman
+%====================公式按章编号==========================
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+%================= 基本格式预置 ===========================
+\usepackage{fancyhdr}
+\pagestyle{fancy}                    %采用fancy页眉页脚风格
+%\fancyhf{}                           %清除所有页眉页脚
+%\fancyhead[C]{\zihao{5}  \songti  同济大学中德学院课程报告 }	%设置页眉
+\fancyfoot[C]{~\zihao{5} \thepage~}						%设置页脚
+\renewcommand{\headrulewidth}{0.65pt} 
+%\CTEXsetup[format={\centering\bfseries\zihao{-2}},name={第, 章}]{section}
+%取消你用section设置章格式的用法，恢复节格式。
+\CTEXsetup[format={\raggedright\bfseries\zihao{3}}]{section}
+%format 用来控制章节标题德全局格式，nameformat则是控制章节名词和编号格式，不包括后面的标题内容（比如第1章 目录，只控制第1章）
+%\CTEXsetup[nameformat={\bfseries\zihao{3}}]{section}
+\CTEXsetup[nameformat={\bfseries\zihao{3}}]{subsection}
+\CTEXsetup[nameformat={\bfseries\zihao{4}}]{subsubsection}
+%
+%================== 图形支持宏包 =========================
+\usepackage{subfigure}
+\usepackage{array}
+\usepackage{tabularx}               %宽度调整的表格
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\usepackage{varwidth}               %自动调整宽度
+\usepackage{float}
+\usepackage{graphicx}                % 嵌入png图像
+\usepackage{color,xcolor}            % 支持彩色文本、底色、文本框等
+\usepackage{hyperref}                % 交叉引用，生成超链接目录等
+\hypersetup{hidelinks}               %隐藏链接，将目录、超链接红色等改为黑色。
+\hypersetup{bookmarksnumbered=true}  %psfbookmark中显示章节编号
+\usepackage{caption}                 %图表标题格式控制宏包
+\captionsetup{labelsep=space}        %图的标签（图x-xx）和标题之间用空格
+\captionsetup{figurewithin=section}
+%==================== 源码和流程图 =====================
+\usepackage{listings}                % 粘贴源代码
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+%代码格式
+\lstset{ %
+	language=Octave,                % the language of the code
+	basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+	numbers=left,                   % where to put the line-numbers
+	numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+	stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+	% will be numbered
+	numbersep=5pt,                  % how far the line-numbers are from the code
+	backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+	showspaces=false,               % show spaces adding particular underscores
+	showstringspaces=false,         % underline spaces within strings
+	showtabs=false,                 % show tabs within strings adding particular underscores
+	%frame=single,                   % adds a frame around the code
+	rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+	tabsize=2,                      % sets default tabsize to 2 spaces
+	captionpos=b,                   % sets the caption-position to bottom
+	breaklines=true,                % sets automatic line breaking
+	breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+	title=\lstname,                   % show the filename of files included with \lstinputlisting;
+	% also try caption instead of title
+	keywordstyle=\color{blue},          % keyword style
+	commentstyle=\color{dkgreen},       % comment style
+	stringstyle=\color{mauve},         % string literal style
+	escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+	morekeywords={*,...}               % if you want to add more keywords to the set
+}
+\usepackage{tikz}                    
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes,arrows,positioning}
+%=================== 自定义插图命令=======================
+%插入水平图2个，分别标图注
+\newcommand{\insTwoGraphonSg}[6]{	
+	\begin{figure}[H]
+		\centering
+		\begin{minipage}[t]{0.45\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{#1}
+			\caption{#2}
+			\label{fig:#3}
+		\end{minipage}
+		\quad
+		\begin{minipage}[t]{0.45\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{#4}
+			\caption{#5}
+			\label{fig:#6}
+		\end{minipage}
+	\end{figure}}
+
+%插入矩阵图2X2，一个图注加4哥分图注
+%\newcommand{\insFourGrapSg}[14]{\begin{figure}[H]
+%		\centering
+%		\subfigure[#1]{%
+%			\includegraphics[width=0.4\linewidth]{#2}
+%			\label{fig:#3}}
+%		\quad
+%		\subfigure[#4]{%
+%			\includegraphics[width=0.4\linewidth]{#5}
+%			\label{fig:#6}}
+%		\subfigure[#7]{%
+%			\includegraphics[width=0.4\linewidth]{#8}
+%			\label{fig:#9}}
+%		\quad
+%		\subfigure[传统的接收节点]{%
+%			\includegraphics[width=0.4\linewidth]{figure/can_node1}
+%			\label{fig:node_subfigure4}}
+%		%
+%		\caption{数据加密系统的CAN节点与传统的CAN节点对比}
+%		\label{fig:node_figure}
+%%%	\end{figure}}
+
+%==================列表命令自定义================%
+%定义新的列表环境
+%带括号标记，第一行缩进
+\newlist{mylist}{enumerate}{1}
+\setlist[mylist,1]{fullwidth,itemindent=\parindent,labelsep=0pt,partopsep=0pt,parsep=0pt,topsep=0pt,itemsep=0pt,label=\arabic*)}
+%带括号标记，全部缩进
+\newlist{mylist1}{enumerate}{1}
+\setlist[mylist1,1]{fullwidth,leftmargin=3em,labelwidth=1em,labelsep=0pt,itemindent=0pt,partopsep=0pt,parsep=0pt,topsep=0pt,itemsep=0pt,label=\arabic*)}
+%黑点标记，全部缩进
+\newenvironment{mylist2}{\begin{itemize}[leftmargin=3em,partopsep=0pt,parsep=0pt,topsep=0pt,itemsep=0pt]}{\end{itemize}}
+
+%===================表格命令自定义===============%
+%以下是三线表格命令
+%\begin{table}[H]
+%	\setlength{\abovecaptionskip}{-10pt}   
+%	\setlength{\belowcaptionskip}{0pt}   %这2行是为了使表标题与表格距离适当
+%	\caption{AES密钥长度与算法执行轮数的关系}
+%	\begin{center}
+%		\begin{tabularx}{\textwidth}{YY}
+%			\toprule  
+%			密钥长度 & 算法执行轮数$n_{r}$  \\ 
+%			\midrule 
+%			128位 & 10  \\ 
+%			192位 & 12 \\ 
+%			256位 & 14 \\  
+%			\bottomrule
+%		\end{tabularx} 
+%	\end{center}
+%	\label{tb:key_round}
+%\end{table}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\linewidth]{figure/bit_stuff}
+%	\caption{位填充示例}
+%	\label{fig:bit_stuff}
+%\end{figure}
+%如图\ref{fig:bit_stuff}所示。
+%===================   正文开始    ===================
+\begin{document}
+\bibliographystyle{gbt7714-2005}     %论文引用格式
+%===================  定理类环境定义 ===================
+\newtheorem{example}{例}              % 整体编号
+\newtheorem{algorithm}{算法}
+\newtheorem{theorem}{定理}[section]           % 按 section 编号
+\newtheorem{definition}{\hskip 2em 定义}[section]
+\newtheorem{axiom}{公理}[section]
+\newtheorem{property}{性质}
+\newtheorem{proposition}{命题}
+\newtheorem{lemma}{引理}[section]
+\newtheorem{corollary}{推论}
+\newtheorem{remark}{注解}
+\newtheorem{condition}{条件}
+\newtheorem{conclusion}{结论}
+\newtheorem{assumption}{假设}
+%==================重定义 ===================
+\renewcommand{\contentsname}{目录}     
+\renewcommand{\abstractname}{摘要} 
+\renewcommand{\refname}{参考文献}     
+\renewcommand{\indexname}{索引}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\appendixname}{附录}
+\renewcommand{\proofname}{证明}
+\renewcommand{\algorithm}{算法} 
+%============== 封皮和前言 =================
+\input{body/cover}                          %input不会自动换页
+%\pagestyle{plain}                           %摘要开始页脚中间页码
+%\pagenumbering{arabic}                       %摘要开始页脚中间页码大写罗马数字
+%\include{body/abstract}                     %include 自动换页
+\pagestyle{empty}                           %清除页眉页脚及页码计数器
+\tableofcontents                            %输出目录
+\thispagestyle{empty}
+\clearpage
+%============== 论文正文   =================
+\pagestyle{fancy}
+\pagenumbering{arabic}  
+%\setcounter{page}{0}
+\include{body/section1}%引入第一节
+%\include{body/section2}
+%\include{body/section3}
+%\include{body/section4}
+%============= 参考文献 =====================
+\fancyhf{}                           %清除所有页眉页脚
+\fancyhead[C]{\zihao{4} \kaishu 参考文献 }	%设置页眉
+\addcontentsline{toc}{section}{参考文献}
+\bibliography{bibfile}
+\clearpage 
+\pagestyle{fancy} 
+\fancyhf{}                           %清除所有页眉页脚
+\fancyhead[C]{\zihao{4} \kaishu 小结 }	%设置页眉
+\include{body/acknowledge}
+\fancyhf{}                           %清除所有页眉页脚
+\fancyhead[C]{\zihao{4} \kaishu 附录 }	%设置页眉
+\include{body/appendices}
+%\include{body/achievement}
+%=============  致谢  ======================
+
+\end{document}
+%%%%%%%%%% 结束 %%%%%%%%%%
